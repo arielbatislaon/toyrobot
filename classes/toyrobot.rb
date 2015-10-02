@@ -7,4 +7,16 @@ class ToyRobot
   def move
     
   end
+  
+  def left
+    
+  end
+  
+  def right
+    
+  end
+  
+  def report
+    
+  end
 end
