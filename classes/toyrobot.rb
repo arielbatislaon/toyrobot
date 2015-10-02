@@ -1,3 +1,9 @@
+class RobotIsNotYetOnTheTableException < Exception
+end
+
+
+
+
 class ToyRobot
 attr_reader :position, :command  
   def initialize()
@@ -29,7 +35,7 @@ attr_reader :position, :command
   def move()
     error_msg="Robot is already on the edge"
     if @position.empty?
-      raise "Robot is not yet on the table"
+      raise RobotIsNotYetOnTheTableException, "Robot is not yet on the table"
     end
     
     robot_facing = @position["F"]
@@ -69,14 +75,57 @@ attr_reader :position, :command
   end
    
   def left
+
+    if @position.empty?
+      raise RobotIsNotYetOnTheTableException, "Robot is not yet on the table"
+    end
+
+    robot_facing = @position["F"]
+    case robot_facing
+    when 'NORTH'
+          @position["F"] ="WEST"  
+    when 'EAST'
+          @position["F"] ="NORTH"  
+    when 'SOUTH'
+         @position["F"] ="EAST"  
+          
+    when 'WEST'
+       @position["F"] ="SOUTH"  
+    else
+        raise "Robot invalid direction facing:"+robot_facing
+    end
     
   end
   
   def right
+
+    if @position.empty?
+      raise RobotIsNotYetOnTheTableException ,"Robot is not yet on the table"
+    end
+
+    robot_facing = @position["F"]
+    case robot_facing
+    when 'NORTH'
+          @position["F"] ="EAST"  
+    when 'EAST'
+          @position["F"] ="SOUTH"  
+    when 'SOUTH'
+         @position["F"] ="WEST"  
+          
+    when 'WEST'
+       @position["F"] ="NORTH"  
+    else
+        raise "Robot invalid direction facing:"+robot_facing
+    end
     
   end
   
   def report
+    if @position.empty?
+      raise RobotIsNotYetOnTheTableException ,"Robot is not yet on the table"
+    end
+   
+   puts @position["X"].to_s+","+@position["Y"].to_s+","+@position["F"]
     
   end
   
@@ -88,6 +137,7 @@ attr_reader :position, :command
     parsedCommand["cmd"] = cmd_array1[0]
     if cmd_array2[1].nil?
         parsedCommand["parm"] = ""
+        
     else
       parsedCommand["parm"] = cmd_array2[1].strip
     end
@@ -106,7 +156,7 @@ attr_reader :position, :command
     when 'PLACE'
           place(parsedCmd["parm"])
     when 'MOVE'
-          move(parsedCmd["parm"])
+          move
     when 'LEFT'
           left
     when 'RIGHT'
@@ -118,4 +168,6 @@ attr_reader :position, :command
 end
 private :parsedCommand    
 end
+
+
 

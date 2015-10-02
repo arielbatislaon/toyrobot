@@ -13,7 +13,7 @@
     
     before(:each) do
       @robot = ToyRobot.new
-    end
+     end
   
   
     describe "ToyRobot features" do
@@ -117,7 +117,7 @@
    describe "MOVE Comand " do
     
       it "raises error if robot is not yet on the table - PLACE command not called yet" do
-        expect {@robot.move()}.to raise_error
+        expect {@robot.move()}.to raise_error(RobotIsNotYetOnTheTableException)
       end
       describe("test robot movement upon placing robot in valid position start from th center facing north") do
       it "sets position without error if robot is still  within table and raises error if robot is already on the edge" do
@@ -186,7 +186,7 @@
    describe "LEFT Comand " do
     
       it "raises error if robot is not yet on the table - PLACE command not called yet" do
-        expect {@robot.left()}.to raise_error
+        expect {@robot.left()}.to raise_error(RobotIsNotYetOnTheTableException)
       end
       describe("test robot rotates counter clockwise faces from north->west->south->east and back to north") do
         it "sets position facing north  without error upon placing center 2,2,NORTH and robot rotates counter clockwise by continously calling LEFT" do
@@ -216,7 +216,7 @@
    describe "RIGHT Comand " do
     
       it "raises error if robot is not yet on the table - PLACE command not called yet" do
-        expect {@robot.right()}.to raise_error
+        expect {@robot.right()}.to raise_error(RobotIsNotYetOnTheTableException)
       end
       describe("test robot rotates clockwise faces from north->east->south->west and back to north") do
         it "sets position facing north  without error upon placing center 2,2,NORTH and robot rotates  clockwise by continously calling LEFT" do
@@ -242,6 +242,40 @@
        
       end
    end
-
-   
+   describe "REPORT Comand " do
+    
+      it "raises error if robot is not yet on the table - PLACE command not called yet" do
+        expect {@robot.report()}.to raise_error(RobotIsNotYetOnTheTableException)
+      end
+      describe("report displays position") do
+        it "displays without raising error upon placing robot center 2,2,NORTH" do
+          expect {@robot.place("2,2,NORTH")}.to_not raise_error
+          expect { @robot.report() }.to_not raise_error
+        end
+        it "displays correct position upon placing robot center 2,2,NORTH" do
+          expect {@robot.place("2,2,NORTH")}.to_not raise_error
+          $stdout = StringIO.new
+          expect { @robot.report() }.to_not raise_error
+          expect($stdout.string).to match(/2,2,NORTH/)
+          $stdout = STDOUT
+        end
+        
+        
+          it "displays previous position upon placing robot into invalid position" do
+          expect {@robot.place("1,2,EAST")}.to_not raise_error
+          $stdout = StringIO.new
+          expect { @robot.report() }.to_not raise_error
+          expect($stdout.string).to match(/1,2,EAST/)
+          $stdout = STDOUT
+          
+          expect {@robot.place("1,2,XXX")}.to raise_error
+          $stdout = StringIO.new
+          expect { @robot.report() }.to_not raise_error
+          expect($stdout.string).to match(/1,2,EAST/)
+          $stdout = STDOUT
+          
+        end
+  
+      end
   end 
+end
