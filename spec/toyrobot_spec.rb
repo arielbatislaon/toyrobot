@@ -49,23 +49,23 @@ RSpec.describe ToyRobot do
   
   describe "doComand to only accept valid comands: [PLACE,MOVE,LEFT,RIGHT,REPORT]  " do
     it "calls robot.place if command=PLACE" do
-      @robot.should_receive(:place).with("PLACE")
-      @robot.doCommand("PLACE")
+      @robot.should_receive(:place).with("x,y,f")
+      @robot.doCommand("PLACE x,y,f")
     end
     it "calls robot.move if command=MOVE" do
-      @robot.should_receive(:move).with("MOVE")
-      @robot.doCommand("MOVE")
+      @robot.should_receive(:move).with("x,y")
+      @robot.doCommand("MOVE x,y")
     end
     it "calls robot.left if command=LEFT" do
-      @robot.should_receive(:left).with("LEFT")
+      @robot.should_receive(:left)
       @robot.doCommand("LEFT")
     end
     it "calls robot.right if command=RIGHT" do
-      @robot.should_receive(:right).with("RIGHT")
+      @robot.should_receive(:right)
       @robot.doCommand("RIGHT")
     end
     it "calls robot.report if command=REPORT" do
-      @robot.should_receive(:report).with("REPORT")
+      @robot.should_receive(:report)
       @robot.doCommand("REPORT")
     end
     
