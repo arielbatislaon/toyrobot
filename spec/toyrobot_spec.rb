@@ -1,19 +1,21 @@
 # toyrobot_spec.rb
 
-require 'spec_helper'
+require 'rspec/autorun'
+
+require_relative '../classes/toyrobot'
 
 RSpec.describe ToyRobot do
   describe "#place" do
     it "is placeable" do
       robot = ToyRobot.new
-      expect{robot.place}.not_to raise_error
+      robot.place.should_not raise_error  raise_error
     end
   end
 
   describe "#move" do
     it "is moveable" do
       robot = ToyRobot.new
-      expect{robot.move}.not_to raise_error
+      robot.move.should_not raise_error  raise_error
     end
   end  
 end
