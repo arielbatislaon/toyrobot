@@ -1,6 +1,9 @@
 # toyrobot_spec.rb
+require 'rspec/core/formatters/documentation_formatter'
 
 require 'rspec/autorun'
+
+
 
 require "rspec/expectations"
 
@@ -53,8 +56,8 @@ RSpec.describe ToyRobot do
       @robot.doCommand("PLACE x,y,f")
     end
     it "calls robot.move if command=MOVE" do
-      @robot.should_receive(:move).with("x,y")
-      @robot.doCommand("MOVE x,y")
+      @robot.should_receive(:move)
+      @robot.doCommand("MOVE")
     end
     it "calls robot.left if command=LEFT" do
       @robot.should_receive(:left)
@@ -68,7 +71,119 @@ RSpec.describe ToyRobot do
       @robot.should_receive(:report)
       @robot.doCommand("REPORT")
     end
+  
+    it "raises error if  command=xxx" do
+      expect {@robot.doCommand("xxx") }.to raise_error 
+    end
+  
     
   end  
   
+  describe "PLACE Comand " do
+    describe "robot in valid position" do
+    it "sets position without error" do
+      expect {@robot.place("1,1,NORTH")}.to_not raise_error
+      expected_position={"X"=>1,"Y"=>1,"F"=>"NORTH"}
+      @robot.position.should == expected_position
+    end  
+    it "sets position without error more example using valid position" do  
+      expect {@robot.place("1,1,SOUTH")}.to_not raise_error
+      expected_position={"X"=>1,"Y"=>1,"F"=>"SOUTH"}
+      @robot.position.should == expected_position
+    end
+    it "sets position without error more example using valid position" do  
+      expect {@robot.place("4,1,SOUTH")}.to_not raise_error
+      expected_position={"X"=>4,"Y"=>1,"F"=>"SOUTH"}
+      @robot.position.should == expected_position
+    end
+    end
+    describe "robot in invalid position" do
+    it "raises error and robot position unchanged if position is invalid that is x,y value exceeds table size)" do
+      expect {@robot.place("4,1,SOUTH")}.to_not raise_error
+      previous_position=@robot.position.clone
+      expect {@robot.place("5,5,NORTH")}.to raise_error
+      @robot.position.should == previous_position
+    end  
+    it "raises error and robot position unchanged if position is invalid that is facing is invalid F=xxx)" do
+      expect {@robot.place("2,2,SOUTH")}.to_not raise_error
+      previous_position=@robot.position.clone
+      expect {@robot.place("1,1,xxx")}.to raise_error
+      @robot.position.should == previous_position
+    end
+   end   
+    
+  end
+  
+ describe "MOVE Comand " do
+  
+    it "raises error if robot is not yet on the table - PLACE command not called yet" do
+      expect {@robot.move()}.to raise_error
+    end
+    describe("test robot movement upon placing robot in valid position start from th center facing north") do
+    it "sets position without error if robot is still  within table and raises error if robot is already on the edge" do
+      expect {@robot.place("2,2,NORTH")}.to_not raise_error
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>2,"Y"=>3,"F"=>"NORTH"}
+      expect {@robot.position}.to eq(expected_position)
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>2,"Y"=>4,"F"=>"NORTH"}
+      expect {@robot.position}.to eq(expected_position)
+      
+      expect {@robot.move()}.to raise_error
+      expect {@robot.position}.to eq(expected_position)
+      
+    end
+    end
+    describe("test robot movement upon placing robot in valid position start from the center facing SOUTH") do
+    it "sets position without error if robot is still  within table and raises error if robot is already on the edge" do
+      expect {@robot.place("2,2,SOUTH")}.to_not raise_error
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>2,"Y"=>1,"F"=>"SOUTH"}
+      expect {@robot.position}.to eq(expected_position)
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>2,"Y"=>0,"F"=>"SOUTH"}
+      expect {@robot.position}.to eq(expected_position)
+      
+      expect {@robot.move()}.to raise_error
+      expect {@robot.position}.to eq(expected_position)
+      
+    end
+  end
+
+   describe("test robot movement upon placing robot in valid position start from the center facing EAST") do
+    it "sets position without error if robot is still  within table and raises error if robot is already on the edge" do
+      expect {@robot.place("2,2,EAST")}.to_not raise_error
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>3,"Y"=>2,"F"=>"EAST"}
+      expect {@robot.position}.to eq(expected_position)
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>4,"Y"=>2,"F"=>"EAST"}
+      expect {@robot.position}.to eq(expected_position)
+      
+      expect {@robot.move()}.to raise_error
+      expect {@robot.position}.to eq(expected_position)
+      
+    end
+  end
+
+   describe("test robot movement upon placing robot in valid position start from the center facing WEST") do
+    it "sets position without error if robot is still  within table and raises error if robot is already on the edge" do
+      expect {@robot.place("2,2,WEST")}.to_not raise_error
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>1,"Y"=>2,"F"=>"WEST"}
+      expect {@robot.position}.to eq(expected_position)
+      expect {@robot.move()}.to_not raise_error
+      expected_position={"X"=>0,"Y"=>2,"F"=>"WEST"}
+      expect {@robot.position}.to eq(expected_position)
+      
+      expect {@robot.move()}.to raise_error
+      expect {@robot.position}.to eq(expected_position)
+      
+    end
+  end
+
+
+    
+   
+  end
 end 
