@@ -10,7 +10,6 @@ attr_reader :position, :command
   def place(parm)
   
     pos_array = parm.split(",")
-    puts "pos_array="+pos_array.to_s
     x = pos_array[0].to_i
     y = pos_array[1].to_i
     f = pos_array[2]
@@ -28,7 +27,45 @@ attr_reader :position, :command
   end
   
   def move()
-    puts 'move has been called'
+    error_msg="Robot is already on the edge"
+    if @position.empty?
+      raise "Robot is not yet on the table"
+    end
+    
+    robot_facing = @position["F"]
+    pos_x = @position["X"]
+    pos_y = @position["Y"]
+    case robot_facing
+    when 'NORTH'
+          if pos_y<@table["max_row"]-1
+            @position["Y"]+=1
+          else
+            raise error_msg
+          end  
+    when 'EAST'
+          if pos_x<@table["max_col"]-1
+            @position["X"]+=1
+          else
+            raise error_msg
+          end
+    when 'SOUTH'
+       if pos_y>0
+            @position["Y"]-=1
+          else
+            raise error_msg
+       end
+          
+    when 'WEST'
+       if pos_x>0
+            @position["X"]-=1
+          else
+            raise error_msg
+       end
+
+    else
+        raise "Robot invalid direction facing:"+robot_facing
+    end
+    
   end
    
   def left

@@ -124,13 +124,13 @@ RSpec.describe ToyRobot do
       expect {@robot.place("2,2,NORTH")}.to_not raise_error
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>2,"Y"=>3,"F"=>"NORTH"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>2,"Y"=>4,"F"=>"NORTH"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
       expect {@robot.move()}.to raise_error
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
     end
     end
@@ -139,13 +139,13 @@ RSpec.describe ToyRobot do
       expect {@robot.place("2,2,SOUTH")}.to_not raise_error
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>2,"Y"=>1,"F"=>"SOUTH"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>2,"Y"=>0,"F"=>"SOUTH"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
       expect {@robot.move()}.to raise_error
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
     end
   end
@@ -155,13 +155,13 @@ RSpec.describe ToyRobot do
       expect {@robot.place("2,2,EAST")}.to_not raise_error
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>3,"Y"=>2,"F"=>"EAST"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>4,"Y"=>2,"F"=>"EAST"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
       expect {@robot.move()}.to raise_error
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
     end
   end
@@ -171,13 +171,13 @@ RSpec.describe ToyRobot do
       expect {@robot.place("2,2,WEST")}.to_not raise_error
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>1,"Y"=>2,"F"=>"WEST"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       expect {@robot.move()}.to_not raise_error
       expected_position={"X"=>0,"Y"=>2,"F"=>"WEST"}
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
       expect {@robot.move()}.to raise_error
-      expect {@robot.position}.to eq(expected_position)
+      @robot.position.should eq(expected_position)
       
     end
   end
