@@ -8,32 +8,14 @@
   RSpec.describe "toyrobot_main.rb" do
     
     it "exits the loop when QUIT is passed" do
-      #$stdout = StringIO.new
-      $stdin = StringIO.new("MOVE\n")
-      def $stdin.gets
-      s = super
-      case s
-      when "<EOF>"
-        nil
-      when nil
-        
-        s="move\n"
-        
-      else
-        s
-      end
-    end
-      
-      
-      
+      $stdout = StringIO.new
+      $stdin = StringIO.new("QUIT\n")
       expect($stdout).to respond_to(:puts)
-      
       require_relative '../classes/toyrobot_main.rb' #load/run the file
       $stdin = StringIO.new("QUIT\n")
       $stdin = STDIN
     end
-  
-  
+   
   end
   
   RSpec.describe ToyRobot do
