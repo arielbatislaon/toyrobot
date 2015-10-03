@@ -7,7 +7,7 @@ How to run  :
    git clone https://github.com/arielbatislaon/toyrobot.git
    or downloading as zip file and unzipping it to your local folder
    
-   This requires the Ruby Interpreter  if you dont have the Ruby interpreter you can download and install it from:
+   This requires the Ruby Interpreter  if you don't have the Ruby interpreter you can download and install it from:
    https://www.ruby-lang.org/en/downloads/. Download the latest current stable
    
    Once you've download the source code, the structure of the folders should look like this :
@@ -29,14 +29,14 @@ How to run  :
         
   Running the Test :
        Running test requires RSPEC module.
-       To install RSPEC modules in the comand line run:
+       To install RSPEC modules in the command line run:
        
           gem install rspec
        for more info visit : https://www.relishapp.com/rspec/docs/gettingstarted
        
        then run <The Folder where you unpack the sour code>/.../spec>ruby toyrobot_spec.rb 
        
- The motivation in writing this coding challenges is based on below requirment
+ The motivation in writing this coding challenge is based on below requirement
  
  Toy Robot Simulator
 ===================
